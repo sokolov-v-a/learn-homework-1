@@ -14,19 +14,16 @@
 
 """
 def what_should_the_user_do(age):
-  what_should__do = ""
   if age < 7:
-    what_should__do = "учиться в детском саду"
+    return "учиться в детском саду"
   elif(age < 17):
-    what_should__do = "учиться в школе"
+    return "учиться в школе"
   elif(age < 23):
-    what_should__do = "учиться в ВУЗе"    
+    return "учиться в ВУЗе"    
   elif(age < 120):
-    what_should__do = "работать"    
+    return "работать"    
   else:  
-    what_should__do = "ты долгожитель, наслаждайся жизнью"    
-   
-  return what_should__do  
+    return "ты долгожитель, наслаждайся жизнью"    
 
 def main():
 

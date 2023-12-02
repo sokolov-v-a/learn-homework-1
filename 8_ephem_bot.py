@@ -40,29 +40,12 @@ def get_constellation(update, context):
     text = "Вызван /planet"
     my_list = update.message.text.split()
     if len(my_list) == 2:
-      planet_name = my_list[1].lower()
+      planet_name = my_list[1]
       str_date = datetime.now().strftime("%Y/%m/%d")
-      if  planet_name == "mars":
-          planet = ephem.Mars(str_date)
+      if hasattr(ephem, planet_name):
+          f_planet = getattr(ephem, planet_name)
+          planet = f_planet(str_date)  
           text = ephem.constellation(planet)
-      elif planet_name == "mercury":
-          planet = ephem.Mercury(str_date)
-          text = ephem.constellation(planet)
-      elif planet_name == "venus":
-          planet = ephem.Venus(str_date)
-          text = ephem.constellation(planet)
-      elif planet_name == "jupiter":
-          planet = ephem.Jupiter(str_date)
-          text = ephem.constellation(planet)   
-      elif planet_name == "saturn":
-          planet = ephem.Saturn(str_date)
-          text = ephem.constellation(planet)
-      elif planet_name == "uranus":
-          planet = ephem.Uranus(str_date)
-          text = ephem.constellation(planet)   
-      elif planet_name == "neptune":
-          planet = ephem.Neptune(str_date)
-          text = ephem.constellation(planet)   
       else:
           text = "такой планеты нет"
     print(text)
