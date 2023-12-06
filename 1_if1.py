@@ -16,11 +16,11 @@
 def what_should_the_user_do(age):
   if age < 7:
     return "учиться в детском саду"
-  elif(age < 17):
+  elif age < 17:
     return "учиться в школе"
-  elif(age < 23):
+  elif age < 23:
     return "учиться в ВУЗе"    
-  elif(age < 120):
+  elif age < 120:
     return "работать"    
   else:  
     return "ты долгожитель, наслаждайся жизнью"    
