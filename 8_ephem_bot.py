@@ -13,7 +13,9 @@
 
 """
 import logging
-
+import my_settings
+import ephem
+from datetime import datetime
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 logging.basicConfig(format='%(name)s - %(levelname)s - %(message)s',
@@ -29,24 +31,37 @@ PROXY = {
     }
 }
 
-
 def greet_user(update, context):
     text = 'Вызван /start'
     print(text)
     update.message.reply_text(text)
 
+def get_constellation(update, context):
+    text = "Вызван /planet"
+    my_list = update.message.text.split()
+    if len(my_list) == 2:
+      planet_name = my_list[1]
+      str_date = datetime.now().strftime("%Y/%m/%d")
+      if hasattr(ephem, planet_name):
+          f_planet = getattr(ephem, planet_name)
+          planet = f_planet(str_date)  
+          text = ephem.constellation(planet)
+      else:
+          text = "такой планеты нет"
+    print(text)
+    update.message.reply_text(text)
 
 def talk_to_me(update, context):
     user_text = update.message.text
     print(user_text)
-    update.message.reply_text(text)
-
+    update.message.reply_text(user_text)
 
 def main():
-    mybot = Updater("КЛЮЧ, КОТОРЫЙ НАМ ВЫДАЛ BotFather", request_kwargs=PROXY, use_context=True)
+    mybot = Updater(my_settings.API_KEY)
 
     dp = mybot.dispatcher
     dp.add_handler(CommandHandler("start", greet_user))
+    dp.add_handler(CommandHandler("planet", get_constellation))
     dp.add_handler(MessageHandler(Filters.text, talk_to_me))
 
     mybot.start_polling()
